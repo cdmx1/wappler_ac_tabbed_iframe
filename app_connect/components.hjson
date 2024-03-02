@@ -1,0 +1,89 @@
+{
+  components: [
+    {
+      type: "dmx-tabbed-iframe",
+      selector: "dmx-tabbed-iframe, [is=dmx-tabbed-iframe]",
+      groupTitle: "Components",
+      groupIcon: "fa fa-lg fa-cube",
+      title: "Tabbed Iframes: @@id@@",
+      icon: "fa fa-lg fa-columns",
+      state: "opened",
+      anyParent: true,
+      template: "<dmx-tabbed-iframe id=\"@@id@@\"></dmx-tabbed-iframe>",
+      baseName: "tabbed_iframes",
+      help: "Tabbed iframes component for displaying multiple iframes in tabs",
+      dataScheme: [
+        { name: "id", title: "Id", type: "number" },
+        { name: "active_tab", title: "Active Tab", type: "number" },
+        { name: "tabs", title: "Tabs", type: "array", items: { type: "object", properties: { id: { type: "string" }, title: { type: "string" }, src: { type: "string" } } } },
+        { name: "loading_screen", title: "Loading Screen", type: "number" }
+      ],
+      outputType: "object",
+      dataPick: true,
+      properties: [
+        {
+          group: "Tabbed Iframe Properties",
+          variables: [
+            { 
+              name: "id", 
+              attribute: "id", 
+              title: "ID", type: "text", 
+              required: true, 
+              help: "Unique ID for the component" 
+            },
+            { 
+              name: "auto_iframe_mode", 
+              attribute: "dmx-bind:auto_iframe_mode", 
+              title: "Auto Iframe Mode", 
+              type: "boolean", 
+              defaultValue: true, 
+              help: "Enable or disable auto iframe mode" 
+            },
+            { 
+              name: "auto_item_active", 
+              attribute: "dmx-bind:auto_item_active", 
+              title: "Auto Item Active", 
+              type: "boolean", 
+              defaultValue: true, 
+              help: "Enable or disable auto activation of new tabs" 
+            },
+            { 
+              name: "auto_show_new_tab", 
+              attribute: "dmx-bind:auto_show_new_tab", 
+              title: "Auto Show New Tab", 
+              type: "boolean", 
+              defaultValue: true, 
+              help: "Automatically show new tabs" 
+            },
+            { 
+              name: "allow_duplicates", 
+              attribute: "dmx-bind:allow_duplicates", 
+              title: "Allow Duplicates", 
+              type: "boolean", 
+              defaultValue: true, 
+              help: "Allow duplicate tabs" 
+            },
+            { 
+              name: "use_navbar_items", 
+              attribute: "dmx-bind:use_navbar_items", 
+              title: "Use Navbar Items", 
+              type: "boolean", 
+              defaultValue: true, 
+              help: "Use navigation bar items" 
+            }
+          ]
+        }
+      ],
+      actionsScheme: [],
+      children: [],
+      allowed_children: {},
+      copyFiles: [],
+      linkFiles: [],
+      cssOrder: [],
+      jsOrder: []
+    }
+  ],
+  attributes: [],
+  events: [],
+  static_events: []
+}
