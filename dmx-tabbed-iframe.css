@@ -1,0 +1,18 @@
+.tab-content {
+    margin-top: 20px;
+}
+
+.close-button {
+    display: none;
+    cursor: pointer;
+}
+
+a.close-button {
+    color: #dc3545;
+    line-height: 1;
+    z-index: 10;
+}
+
+.nav-link:hover .close-button {
+    display: inline;
+}
