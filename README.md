@@ -1,4 +1,4 @@
-﻿### Developed and Maintained by: Roney Dsilva
+﻿### Developed and Maintained by: Lavi Sidana
 
 # Tabbed Iframes Module Documentation
 

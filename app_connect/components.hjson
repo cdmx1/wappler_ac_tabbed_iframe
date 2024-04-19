@@ -24,61 +24,131 @@
         {
           group: "Tabbed Iframe Properties",
           variables: [
-            { 
-              name: "id", 
-              attribute: "id", 
-              title: "ID", type: "text", 
-              required: true, 
-              help: "Unique ID for the component" 
+            {
+              name: "id",
+              attribute: "id",
+              title: "ID", type: "text",
+              required: true,
+              help: "Unique ID for the component"
             },
-            { 
-              name: "auto_iframe_mode", 
-              attribute: "dmx-bind:auto_iframe_mode", 
-              title: "Auto Iframe Mode", 
-              type: "boolean", 
-              defaultValue: true, 
-              help: "Enable or disable auto iframe mode" 
+            {
+              name: "auto_iframe_mode",
+              attribute: "dmx-bind:auto_iframe_mode",
+              title: "Auto Iframe Mode",
+              type: "boolean",
+              defaultValue: true,
+              help: "Enable or disable auto iframe mode"
             },
-            { 
-              name: "auto_item_active", 
-              attribute: "dmx-bind:auto_item_active", 
-              title: "Auto Item Active", 
-              type: "boolean", 
-              defaultValue: true, 
-              help: "Enable or disable auto activation of new tabs" 
+            {
+              name: "auto_item_active",
+              attribute: "dmx-bind:auto_item_active",
+              title: "Auto Item Active",
+              type: "boolean",
+              defaultValue: true,
+              help: "Enable or disable auto activation of new tabs"
             },
-            { 
-              name: "auto_show_new_tab", 
-              attribute: "dmx-bind:auto_show_new_tab", 
-              title: "Auto Show New Tab", 
-              type: "boolean", 
-              defaultValue: true, 
-              help: "Automatically show new tabs" 
+            {
+              name: "auto_show_new_tab",
+              attribute: "dmx-bind:auto_show_new_tab",
+              title: "Auto Show New Tab",
+              type: "boolean",
+              defaultValue: true,
+              help: "Automatically show new tabs"
             },
-            { 
-              name: "allow_duplicates", 
-              attribute: "dmx-bind:allow_duplicates", 
-              title: "Allow Duplicates", 
-              type: "boolean", 
-              defaultValue: true, 
-              help: "Allow duplicate tabs" 
+            {
+              name: "allow_duplicates",
+              attribute: "dmx-bind:allow_duplicates",
+              title: "Allow Duplicates",
+              type: "boolean",
+              defaultValue: true,
+              help: "Allow duplicate tabs"
             },
-            { 
-              name: "use_navbar_items", 
-              attribute: "dmx-bind:use_navbar_items", 
-              title: "Use Navbar Items", 
-              type: "boolean", 
-              defaultValue: true, 
-              help: "Use navigation bar items" 
+            {
+              name: "use_navbar_items",
+              attribute: "dmx-bind:use_navbar_items",
+              title: "Use Navbar Items",
+              type: "boolean",
+              defaultValue: true,
+              help: "Use navigation bar items"
+            },
+            {
+            "name": "gridNoLoad",
+            "hasAttribute": "noload",
+            "title": "No Auto Load",
+            "type": "boolean",
+            "defaultValue": "",
+            "initValue": true
+            },
+            {
+              name: "hide_iframe_elements",
+              attribute: "hide_iframe_elements",
+              title: "Hide Iframe elements",
+              type: "text",
+              defaultValue: null,
+              help: "Use navigation bar items"
             }
           ]
         }
       ],
-      actionsScheme: [],
+      actionsScheme: [
+        {
+          addTitle: 'addTab',
+          title : 'Add Tab',
+          name : 'addTab',
+          icon : 'fa fa-lg fa-play',
+          state : 'opened',
+          help: 'Add new link for tabs',
+          properties: [
+            {
+              group: 'Properties',
+              variables: [
+                {
+                  name: '1', optionName: '1', title: 'Title', type: 'text',
+                  dataBindings: true, defaultValue: '', required: true,
+                  help: 'Title of the tab.'
+                },
+                {
+                  name: '2', optionName: '2', title: 'URL', type: 'text',
+                  dataBindings: true, defaultValue: '', required: true,
+                  help: 'Link to open in tab.'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          addTitle: 'load',
+          title : 'Load',
+          name : 'load',
+          icon : 'fa fa-lg fa-play',
+          state : 'opened',
+          help: 'Load Tabbed Ifrane',
+          properties: []
+        }
+      ],
       children: [],
       allowed_children: {},
-      copyFiles: [],
-      linkFiles: [],
+      copyFiles: [
+        {
+          "src": "../../../node_modules/@cdmx/wappler_ac_tabbed_iframe/dmx-tabbed-iframe.js",
+          "dst": "js/dmx-tabbed-iframe.js"
+        },
+        {
+          "src": "../../../node_modules/@cdmx/wappler_ac_tabbed_iframe/dmx-tabbed-iframe.css",
+          "dst": "css/dmx-tabbed-iframe.css"
+        }
+      ],
+      linkFiles: [
+        {
+          "src": "js/dmx-tabbed-iframe.js",
+          "type": "js",
+          "defer": true
+        },
+        {
+          "src": "css/dmx-tabbed-iframe.css",
+          "type": "css"
+        }
+      ],
       cssOrder: [],
       jsOrder: []
     }

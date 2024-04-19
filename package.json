@@ -1,6 +1,6 @@
 {
     "name": "@cdmx/tabbed_iframe",
-    "version": "0.0.0-testing-phase-1",
+    "version": "0.0.1-testing-phase-1",
     "type": "module",
     "description": "App Connect module for Tabbed Iframe.",
     "license": "MIT",
@@ -13,8 +13,7 @@
         "app-connect",
         "tabbed-iframe"
     ],
-    "dependencies": {
-    },
+    "dependencies": {},
     "scripts": {
         "build": "rollup --config",
         "publish-dry-run": "npm publish ./dist --access public --dry-run"
