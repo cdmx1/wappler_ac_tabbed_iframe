@@ -2,6 +2,10 @@
     margin-top: 20px;
 }
 
+.content-wrapper.iframe-mode:fullscreen .tab-content {
+    margin-top: 0;
+}
+
 .close-button {
     display: none;
     cursor: pointer;

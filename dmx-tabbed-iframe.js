@@ -101,7 +101,7 @@ dmx.Component('tabbed-iframe', {
       this.deleteTab(tab.id);
       return;
     });
-    this.set('tabs', all ? []: [tabs[activeIndex]]);
+    this.set('tabs', all ? [] : [tabs[activeIndex]]);
   },
   activateTab: function (tabId) {
     this.set('active_tab', tabId);
@@ -135,35 +135,29 @@ dmx.Component('tabbed-iframe', {
       this.activateTab(tabid);
     }
   },
-  load: function(node) {
-    if (this.get('iframeInstance')){
+  load: function (node) {
+    if (this.get('iframeInstance')) {
       return;
     }
-    // console.log(this.get('iframeInstance'));
+
     const id = this.props.id || 'tabbed-iframe';
 
     node.innerHTML = `
       <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="${this.props.loading_screen}">
         <div class="nav navbar navbar-expand-lg navbar-white navbar-light border-bottom p-0">
 
-            <li class="nav-item dropdown">
+            <div class="nav-item dropdown">
               <button class="bg-danger dropdown-toggle nav-link text-white" data-bs-toggle="dropdown" role="button" aria-expanded="false">Close</button>
               <ul class="dropdown-menu">
                 <li><button class="dropdown-item close" data-type="all" href="#">Close all</button></li>
                 <li><button class="dropdown-item close" data-type="exceptActive" href="#">Close all Other</button></li>
               </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <button class="nav-link bg-light" id="scrollLeft"><i class="fas fa-angle-double-left"></i></button>
-            </li>
-            <div class="d-flex overflow-hidden" id="${id}-tabs">
             </div>
-            <li class="nav-item dropdown">
+              <button class="nav-link bg-light" id="scrollLeft"><i class="fas fa-angle-double-left"></i></button>
+            <ul class="navbar-nav w-100 bg-light overflow-hidden" id="${id}-tabs">
+            </ul>
               <button class="nav-link bg-light" id="scrollRight"><i class="fas fa-angle-double-right"></i></button>
-            </li>
-            <li class="nav-item dropdown">
               <button class="nav-link bg-light" id="fullscreenToggle"><i class="fas fa-expand"></i></button>
-            </li>
 
         </div>
         <div class="tab-content" id="${id}-tab-content">
@@ -214,7 +208,7 @@ dmx.Component('tabbed-iframe', {
 
       fullscreenToggleBtn.addEventListener('click', function () {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(err => {
+          document.querySelector('.content-wrapper.iframe-mode').requestFullscreen().catch(err => {
             console.log(`Error attempting to enable full-screen mode: ${err.message}`);
           });
         } else {
@@ -302,26 +296,16 @@ dmx.Component('tabbed-iframe', {
     const iframe = document.getElementById(`${tabId}-iframe`);
     const loadingMessage = document.getElementById('loadingTab');
 
-    // Hide the loading message when the iframe is fully loaded
-    iframe.addEventListener('load', function () {
-      loadingMessage.style.display = 'none';
-    });
-
-    // Show an error message if the iframe fails to load
-    iframe.addEventListener('error', function () {
-      loadingMessage.textContent = 'Error: Failed to load iframe.';
-    });
-
-    // Show the loading message if the iframe is still loading
-    iframe.addEventListener('readystatechange', function () {
-      if (iframe.readyState === 'loading') {
-        loadingMessage.style.display = 'contents';
-      }
-    });
+    // Hide loading message when the iframe finishes loading
+    iframe.onload = iframe.onreadystatechange = function () {
+      loadingMessage.style.display = "none";
+      iframe.style.display = "block";
+    };
 
     // Activate the new tab
     var bsTab = new bootstrap.Tab(tabLink);
     if (this.props.auto_show_new_tab) {
+      loadingMessage.style.display = "contents";
       this.set('active_tab', tabId);
       this.hideElement('emptyTab');
       // this.hideIframeElements(tabId);
@@ -330,7 +314,7 @@ dmx.Component('tabbed-iframe', {
   },
   render: function (node) {
     if (this.props.noload) {
-      console.log('here');
+      // console.log('here');
       return;
     }
     this.load(node);
