@@ -84,7 +84,7 @@
               attribute: "hide_iframe_elements",
               title: "Hide Iframe elements",
               type: "text",
-              defaultValue: null,
+              defaultValue: '',
               help: "Use navigation bar items"
             }
           ]
@@ -126,6 +126,73 @@
           properties: []
         }
       ],
+      children: [],
+      allowed_children: {},
+      copyFiles: [
+        {
+          "src": "../../../node_modules/@cdmx/wappler_ac_tabbed_iframe/dmx-tabbed-iframe.js",
+          "dst": "js/dmx-tabbed-iframe.js"
+        },
+        {
+          "src": "../../../node_modules/@cdmx/wappler_ac_tabbed_iframe/dmx-tabbed-iframe.css",
+          "dst": "css/dmx-tabbed-iframe.css"
+        }
+      ],
+      linkFiles: [
+        {
+          "src": "js/dmx-tabbed-iframe.js",
+          "type": "js",
+          "defer": true
+        },
+        {
+          "src": "css/dmx-tabbed-iframe.css",
+          "type": "css"
+        }
+      ],
+      cssOrder: [],
+      jsOrder: []
+    },
+    {
+      type: "dmx-iframe-data",
+      selector: "dmx-iframe-data, [is=dmx-iframe-data]",
+      groupTitle: "Components",
+      groupIcon: "fa fa-lg fa-cube",
+      title: "Tabbed Iframes Data: @@id@@",
+      icon: "fa fa-lg fa-columns",
+      state: "opened",
+      anyParent: true,
+      template: "<dmx-iframe-data id=\"@@id@@\"></dmx-iframe-data>",
+      baseName: "tabbed_iframe_data",
+      help: "Tabbed iframes component for displaying multiple iframes in tabs",
+      dataScheme: [
+        { name: "id", title: "Id", type: "text" },
+        { name: "data", title: "data", type: "object" },
+      ],
+      outputType: "object",
+      dataPick: true,
+      properties: [
+        {
+          group: "Tabbed Iframe Data Properties",
+          variables: [
+            {
+              name: "id",
+              attribute: "id",
+              title: "ID", type: "text",
+              required: true,
+              help: "Unique ID for the component"
+            },
+            {
+            "name": "gridNoLoad",
+            "hasAttribute": "noload",
+            "title": "No Auto Load",
+            "type": "boolean",
+            "defaultValue": "",
+            "initValue": true
+            },
+          ]
+        }
+      ],
+      actionsScheme: [],
       children: [],
       allowed_children: {},
       copyFiles: [

@@ -21,7 +21,7 @@ dmx.Component('tabbed-iframe', {
     auto_show_new_tab: { type: Boolean, default: true },
     allow_duplicates: { type: Boolean, default: true },
     use_navbar_items: { type: Boolean, default: true },
-    hide_iframe_elements: { type: Array, default: [] }
+    hide_iframe_elements: { default: "" }
   },
 
   methods: {
@@ -62,16 +62,23 @@ dmx.Component('tabbed-iframe', {
 
       elements.forEach((element, index) => {
         let elementInsideIframe = iframeDocument.querySelector(element.selector);
-        elementInsideIframe.classList.add(element.class);
+        if (elementInsideIframe) {
+          elementInsideIframe.classList.add(element.class);
+        }
       });
     });
   },
   hideIframeElements: function (tabId) {
-    elements = ['header#header', 'aside#sidebar'];
-    elements = elements.map((item) => {
-      // console.log(item);
-      return { selector: item, class: 'd-none' };
-    });
+    let elements = [];
+
+    if (this.props.hide_iframe_elements != "") {
+      elements = this.props.hide_iframe_elements.split(",").map(function (item) {
+        return { selector: item.trim(), class: 'd-none' };
+      }).filter(function (item) {
+        return item.selector !== "";
+      });
+    }
+
     elements.push({ selector: 'body', class: 'iframe-mode' });
     this.addClassIframeElements(tabId, elements);
   },
@@ -240,9 +247,8 @@ dmx.Component('tabbed-iframe', {
   addTab: function (title, href) {
     if (!this.props.allow_duplicates) {
       const tabs = this.get('tabs');
-      // console.log(tabs);
       const index = tabs.findIndex(tab => tab.href === href);
-      // console.log(tab);
+
       if (index != -1) {
         let tab = tabs[index];
         this.activateTab(tab.id);
@@ -273,7 +279,7 @@ dmx.Component('tabbed-iframe', {
     closeButton.classList.add('close-button', 'position-absolute', 'top-0', 'end-0', 'm-1');
     closeButton.setAttribute('type', 'button');
     closeButton.setAttribute('aria-label', 'Close');
-    closeButton.innerHTML = '<i class="fas fa-times"></i>';
+    closeButton.innerHTML = '<i class="fas fa-times position-absolute"></i>';
     closeButton.addEventListener('click', () => {
       this.closeTab(tabId);
     });
@@ -308,13 +314,12 @@ dmx.Component('tabbed-iframe', {
       loadingMessage.style.display = "contents";
       this.set('active_tab', tabId);
       this.hideElement('emptyTab');
-      // this.hideIframeElements(tabId);
+      this.hideIframeElements(tabId);
       bsTab.show();
     }
   },
-  render: function (node) {
+  init: function (node) {
     if (this.props.noload) {
-      // console.log('here');
       return;
     }
     this.load(node);
@@ -322,5 +327,36 @@ dmx.Component('tabbed-iframe', {
   },
 
   update: function (props) {
+  }
+});
+
+dmx.Component('iframe-data', {
+  initialData: {
+    id: null,
+    data: null
+  },
+
+  attributes: {
+    id: { default: null },
+    noload: { type: Boolean, default: false },
+  },
+
+  init: async function (node) {
+    let data = await window.parent.dmx.app.data;
+    this.set('data', data);
+  },
+
+  getObjectProperties: function (obj) {
+    let properties = {};
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        properties[key] = obj[key];
+      }
+    }
+    return properties;
+  },
+
+  beforeDestroy: function () {
+
   }
 });
