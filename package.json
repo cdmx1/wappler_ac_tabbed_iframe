@@ -1,6 +1,6 @@
 {
     "name": "@cdmx/tabbed_iframe",
-    "version": "0.0.3-ac2-beta-phase-1",
+    "version": "0.0.4-ac2",
     "type": "module",
     "description": "App Connect module for Tabbed Iframe.",
     "license": "MIT",

@@ -16,11 +16,11 @@ dmx.Component('tabbed-iframe', {
   attributes: {
     id: { default: null },
     noload: { type: Boolean, default: false },
-    auto_iframe_mode: { type: Boolean, default: true },
+    auto_iframe_mode: { type: Boolean, default: false },
     auto_item_active: { type: Boolean, default: true },
     auto_show_new_tab: { type: Boolean, default: true },
-    allow_duplicates: { type: Boolean, default: true },
-    use_navbar_items: { type: Boolean, default: true },
+    allow_duplicates: { type: Boolean, default: false },
+    use_navbar_items: { type: Boolean, default: false },
     hide_iframe_elements: { default: "" }
   },
 
@@ -137,9 +137,11 @@ dmx.Component('tabbed-iframe', {
 
     if (this.get('tabs').length == 0) {
       showElement('emptyTab');
-    } else {
+    } else if (this.props.auto_item_active) {
       let tabid = tabs[showIndex].id;
       this.activateTab(tabid);
+    } else {
+      this.showElement('emptyTab')
     }
   },
   load: function (node) {
@@ -230,6 +232,12 @@ dmx.Component('tabbed-iframe', {
       document.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
+          if (!this.props.use_navbar_items) {
+            let navbar = document.querySelector('nav');
+            if (navbar.contains(link)) {
+              return;
+            }
+          }
           let href = "";
           if (e.target.tagName === "A") {
             href = e.target.href;
@@ -308,12 +316,15 @@ dmx.Component('tabbed-iframe', {
       iframe.style.display = "block";
     };
 
+    tabLink.addEventListener('shown.bs.tab', (e) => {
+      this.hideElement('emptyTab');
+    });
+
     // Activate the new tab
     var bsTab = new bootstrap.Tab(tabLink);
     if (this.props.auto_show_new_tab) {
       loadingMessage.style.display = "contents";
       this.set('active_tab', tabId);
-      this.hideElement('emptyTab');
       this.hideIframeElements(tabId);
       bsTab.show();
     }
